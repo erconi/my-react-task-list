@@ -3,6 +3,8 @@ import './App.css';
 import { TodoAdd } from './components/TodoAdd';
 import { TodoList } from './components/TodoList';
 import { useTodo } from './hooks/useTodo';
+import TaskForm from './TaskForm';
+
 
 function App() {
   const {
@@ -30,7 +32,7 @@ function App() {
 
         <div className='add-todo'>
           <h3>Agregar Tarea</h3>
-          <TodoAdd handleNewTodo={handleNewTodo} />
+          <TaskForm />
         </div>
 
         <TodoList
@@ -44,4 +46,24 @@ function App() {
   );
 }
 
+function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const handleNewTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
+  return (
+    <div className="App">
+      <h1>My Task List</h1>
+      <TaskForm handleNewTask={handleNewTask} />
+      {tasks.map((task, index) => (
+        <div key={index}>
+          <h2>{task.name}</h2>
+          {task.description && <p>{task.description}</p>}
+        </div>
+      ))}
+    </div>
+  );
+}
 export default App;
