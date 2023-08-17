@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Tareas from './components/Tareas';
 import SobreNosotros from './components/SobreNosotros';
 import Menu from './components/Menu';
+import { ChakraProvider } from "@chakra-ui/react"
+
 
 const App = () => {
   return (
