@@ -6,6 +6,9 @@ import SobreNosotros from './components/SobreNosotros';
 import Menu from './components/Menu';
 import { ChakraProvider } from "@chakra-ui/react"
 
+const listViewRouter = require('./list-view-router');
+const listEditRouter = require('./list-edit-router');
+
 
 const App = () => {
   return (
@@ -44,5 +47,8 @@ app.get('/tasks', (req, res) => {
 app.listen(3000, () => {
     console.log('Server listening on port 3000');
 });
+
+app.use('/listar', listViewRouter);
+app.use('/editar', listEditRouter);
 
 export default App;
