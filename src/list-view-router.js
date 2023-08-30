@@ -1,6 +1,9 @@
 // list-view-router.js
 const express = require('express');
 const router = express.Router();
+const express = require('express');
+const app = express();
+app.use(express.json());
 
 router.get('/completas', (req, res) => {
   const tareas = [
@@ -32,5 +35,25 @@ tareasIncompletas.forEach(tarea => console.log(tarea.nombre));
 
 
 });
+
+
+// Middleware para validar parámetros
+function validateParams(req, res, next) {
+  if (req.params.id && isNaN(parseInt(req.params.id))) {
+    return res.status(400).send('El ID de la tarea debe ser un número.');
+  }
+  next();
+}
+
+const listViewRouter = express.Router();
+listViewRouter.use(validateParams);
+
+app.use('/list-view', listViewRouter);
+
+// Aquí puedes definir tus rutas para manejar las tareas
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Escuchando en el puerto ${port}...`));
+
 
 module.exports = router;
