@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Tareas from './components/Tareas';
 import SobreNosotros from './components/SobreNosotros';
 import Menu from './components/Menu';
+import * as React from "react"
 import { ChakraProvider } from "@chakra-ui/react"
 
 const listViewRouter = require('./list-view-router');
@@ -27,4 +28,12 @@ const App = () => {
     </Router>
   );
 }
-export default App;
+function App({ Component, pageProps }) {
+  return (
+    <ChakraProvider>
+      <Component {...pageProps} />
+    </ChakraProvider>
+  )
+}
+
+export default App
