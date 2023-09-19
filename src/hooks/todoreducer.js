@@ -1,31 +1,37 @@
 
-import produce from "immer";
-
-export const todoReducer = (initialState, action) =>
-  produce(initialState, (draft) => {
+export const todoReducer = (initialState, action) => {
     switch (action.type) {
-      case "Add Todo":
-        draft.push(action.payload);
-        break;
+        case 'Add Todo':
+            return [...initialState, action.payload];
 
-      case "Delete Todo":
-        return draft.filter((todo) => todo.id !== action.payload);
+        case 'Delete Todo':
+            return initialState.filter(todo => todo.id !== action.payload);
 
-      case "Complete Todo":
-        const todoToComplete = draft.find((todo) => todo.id === action.payload);
-        if (todoToComplete) {
-          todoToComplete.done = !todoToComplete.done;
-        }
-        break;
+        case 'Complete Todo':
+            return initialState.map(todo => {
+                if (todo.id === action.payload) {
+                    return {
+                        ...todo,
+                        done: !todo.done,
+                    };
+                }
 
-      case "Update Todo":
-        const todoToUpdate = draft.find((todo) => todo.id === action.payload.id);
-        if (todoToUpdate) {
-          todoToUpdate.description = action.payload.description;
-        }
-        break;
+                return todo;
+            });
 
-      default:
-        break;
+        case 'Update Todo':
+            return initialState.map(todo => {
+                if (todo.id === action.payload.id) {
+                    return {
+                        ...todo,
+                        description: action.payload.description,
+                    };
+                }
+
+                return todo;
+            });
+
+        default:
+            return initialState;
     }
-  });
+};

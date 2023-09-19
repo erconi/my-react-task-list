@@ -4,7 +4,7 @@ import Home from './components/Home';
 import Tareas from './components/Tareas';
 import SobreNosotros from './components/SobreNosotros';
 import Menu from './components/Menu';
-import { ChakraProvider, Button } from "@chakra-ui/react"
+import { ChakraProvider } from "@chakra-ui/react"
 
 const listViewRouter = require('./list-view-router');
 const listEditRouter = require('./list-edit-router');
@@ -17,9 +17,6 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             <Home />
-            <Button colorScheme="teal" size="md">
-              Botón
-            </Button>
           </Route>
           <Route path="/tareas">
             <Tareas />
@@ -33,5 +30,4 @@ const App = () => {
   );
 }
 export default App
-
 
