@@ -1,41 +1,24 @@
-// list-view-router.js
 const express = require('express');
 const router = express.Router();
-const express = require('express');
 const app = express();
 app.use(express.json());
 
-router.get('/completas', (req, res) => {
-  const tareas = [
-  { nombre: 'Tarea 1', completa: true },
-  { nombre: 'Tarea 2', completa: false },
-  { nombre: 'Tarea 3', completa: true },
-  { nombre: 'Tarea 4', completa: false }
+let tareas = [
+  { id: 1, nombre: 'Tarea 1', completa: true },
+  { id: 2, nombre: 'Tarea 2', completa: false },
+  { id: 3, nombre: 'Tarea 3', completa: true },
+  { id: 4, nombre: 'Tarea 4', completa: false }
 ];
 
-const tareasCompletas = tareas.filter(tarea => tarea.completa);
-
-console.log('Tareas completas:');
-tareasCompletas.forEach(tarea => console.log(tarea.nombre));
-
+router.get('/completas', (req, res) => {
+  const tareasCompletas = tareas.filter(tarea => tarea.completa);
+  res.send(tareasCompletas);
 });
 
 router.get('/incompletas', (req, res) => {
-const tareas = [
-  { nombre: 'Tarea 1', completa: true },
-  { nombre: 'Tarea 2', completa: false },
-  { nombre: 'Tarea 3', completa: true },
-  { nombre: 'Tarea 4', completa: false }
-];
-
-const tareasIncompletas = tareas.filter(tarea => !tarea.completa);
-
-console.log('Tareas incompletas:');
-tareasIncompletas.forEach(tarea => console.log(tarea.nombre));
-
-
+  const tareasIncompletas = tareas.filter(tarea => !tarea.completa);
+  res.send(tareasIncompletas);
 });
-
 
 // Middleware para validar parámetros
 function validateParams(req, res, next) {
@@ -45,15 +28,12 @@ function validateParams(req, res, next) {
   next();
 }
 
-const listViewRouter = express.Router();
-listViewRouter.use(validateParams);
+router.use(validateParams);
 
-app.use('/list-view', listViewRouter);
-
-// Aquí puedes definir tus rutas para manejar las tareas
+app.use('/tareas', router);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Escuchando en el puerto ${port}...`));
 
-
 module.exports = router;
+

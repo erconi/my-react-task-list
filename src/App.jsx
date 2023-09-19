@@ -5,8 +5,6 @@ import { TodoList } from './components/TodoList';
 import { useTodo } from './hooks/useTodo';
 import TaskForm from './TaskForm';
 
-
-
 function App() {
   const {
     todos,
@@ -17,6 +15,12 @@ function App() {
     handleCompleteTodo,
     handleUpdateTodo,
   } = useTodo();
+
+  const [tasks, setTasks] = useState([]);
+
+  const handleNewTask = (task) => {
+    setTasks([...tasks, task]);
+  };
 
   return (
     <>
@@ -33,7 +37,7 @@ function App() {
 
         <div className='add-todo'>
           <h3>Agregar Tarea</h3>
-          <TaskForm />
+          <TaskForm handleNewTask={handleNewTask} />
         </div>
 
         <TodoList
@@ -42,29 +46,19 @@ function App() {
           handleDeleteTodo={handleDeleteTodo}
           handleCompleteTodo={handleCompleteTodo}
         />
+
+        <div className="App">
+          <h1>My Task List</h1>
+          {tasks.map((task, index) => (
+            <div key={index}>
+              <h2>{task.name}</h2>
+              {task.description && <p>{task.description}</p>}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
 }
 
-function App() {
-  const [tasks, setTasks] = useState([]);
-
-  const handleNewTask = (task) => {
-    setTasks([...tasks, task]);
-  };
-
-  return (
-    <div className="App">
-      <h1>My Task List</h1>
-      <TaskForm handleNewTask={handleNewTask} />
-      {tasks.map((task, index) => (
-        <div key={index}>
-          <h2>{task.name}</h2>
-          {task.description && <p>{task.description}</p>}
-        </div>
-      ))}
-    </div>
-  );
-}
 export default App;
